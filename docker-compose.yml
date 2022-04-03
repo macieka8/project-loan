@@ -1,0 +1,12 @@
+version: '3.4'
+
+services: 
+  backend:
+    image: base
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "5207:80"
+      - "7146:443"
+    environment: 
+      - backendUrl=http://backend
