@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Base.Services;
 using Base.Models;
+using Base.Models.Requests;
 
 namespace Base.Controllers;
 
@@ -31,10 +32,18 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create(User newUser)
+    public IActionResult Register(RegistrationRequest request)
     {
-        var user = _userService.Create(newUser);
-        return CreatedAtAction(nameof(Get), new { id = user!.Id }, user);
+        var newUser = _userService.Register(request.Username, request.Password);
+
+        if (newUser is not null)
+        {
+            return CreatedAtAction(nameof(Get), new { id = newUser!.Id }, newUser);
+        }
+        else
+        {
+            return BadRequest("Invalid username or password");
+        }
     }
 
     // [HttpPut("{id}")]

@@ -22,8 +22,19 @@ public class UserService
             .SingleOrDefault(u => u.Id == id);
     }
 
-    public User? Create(User newUser)
+    public User? Register(string username, string password)
     {
+        // Check if username is available
+        if (_context.Users.Any(u => u.Username == username)) return null;
+
+        var newUser = new User
+        {
+            Username = username,
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(password),
+            BorrowedLoans = new List<Loan>(),
+            LendedLoans = new List<Loan>(),
+        };
+
         _context.Users.Add(newUser);
         _context.SaveChanges();
 

@@ -14,8 +14,7 @@ public static class DbInitializer
         var firstUser = new User
         {
             Username = "FirstUser",
-            PasswordHash = "123",
-            Salt = "456",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("123"),
             BorrowedLoans = new List<Loan>(),
             LendedLoans = new List<Loan>()
         };
@@ -23,8 +22,7 @@ public static class DbInitializer
         var secondUser = new User
         {
             Username = "SecondUser",
-            PasswordHash = "asdf",
-            Salt = "ghjk",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("asdf"),
             BorrowedLoans = new List<Loan>(),
             LendedLoans = new List<Loan>()
         };
@@ -32,8 +30,7 @@ public static class DbInitializer
         var thirdUser = new User
         {
             Username = "ThirdUser",
-            PasswordHash = "qqq",
-            Salt = "www",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("password"),
             BorrowedLoans = new List<Loan>(),
             LendedLoans = new List<Loan>()
         };
@@ -41,8 +38,7 @@ public static class DbInitializer
         var fourthUser = new User
         {
             Username = "FourthUser",
-            PasswordHash = "qqq",
-            Salt = "www",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("qwer"),
             BorrowedLoans = new List<Loan>(),
             LendedLoans = new List<Loan>()
         };
