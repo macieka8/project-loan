@@ -31,7 +31,7 @@ public class UserController : ControllerBase
         }
     }
 
-    [HttpPost]
+    [HttpPost("register")]
     public IActionResult Register(RegistrationRequest request)
     {
         var newUser = _userService.Register(request.Username, request.Password);
@@ -43,6 +43,20 @@ public class UserController : ControllerBase
         else
         {
             return BadRequest("Invalid username or password");
+        }
+    }
+
+    [HttpPost("login")]
+    public IActionResult Login(LoginRequest request)
+    {
+        var (success, content) = _userService.Login(request.Username, request.Password);
+        if (success)
+        {
+            return Ok(content);
+        }
+        else
+        {
+            return BadRequest(content);
         }
     }
 
