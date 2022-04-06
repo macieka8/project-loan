@@ -35,6 +35,9 @@ public class UserController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(long id)
     {
+        var userId = int.Parse(User.FindFirst("id")!.Value);
+        if (userId != id) return Forbid();
+
         var userToDelete = _userService.GetById(id);
 
         if (userToDelete is not null)
