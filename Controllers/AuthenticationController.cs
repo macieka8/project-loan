@@ -18,15 +18,20 @@ public class AuthenticationController : ControllerBase
     [HttpPost("register")]
     public IActionResult Register(RegistrationRequest request)
     {
-        var (success, content) = _authenticationService.Register(request.Username, request.Password);
+        var (success, error, user) = _authenticationService.Register(request.Username, request.Password);
 
         if (success)
         {
-            return Ok();
+            return CreatedAtAction(
+                nameof(UserController.Get),
+                "User",
+                new { id = user!.Id },
+                user
+            );
         }
         else
         {
-            return BadRequest(content);
+            return BadRequest(error);
         }
     }
 

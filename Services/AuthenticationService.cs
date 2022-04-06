@@ -18,10 +18,10 @@ public class AuthenticationService : IAuthenticationService
         _configuration = configuration;
     }
 
-    public (bool success, string content) Register(string username, string password)
+    public (bool success, string error, User? user) Register(string username, string password)
     {
         // Check if username is available
-        if (_context.Users.Any(u => u.Username == username)) return (false, "Username already used");
+        if (_context.Users.Any(u => u.Username == username)) return (false, "Username already used", null);
 
         var newUser = new User
         {
@@ -34,7 +34,7 @@ public class AuthenticationService : IAuthenticationService
         _context.Users.Add(newUser);
         _context.SaveChanges();
 
-        return (true, "");
+        return (true, "", newUser);
     }
 
     public (bool success, string token) Login(string username, string password)
