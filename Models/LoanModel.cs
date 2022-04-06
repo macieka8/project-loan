@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Base.Models;
 
-public class Loan
+public class LoanModel
 {
     public long Id { get; set; }
 
@@ -19,12 +19,12 @@ public class Loan
 
     [JsonIgnore]
     [ForeignKey("BorrowerUserId")]
-    public User? Borrower { get; set; }
+    public UserModel? Borrower { get; set; }
 
     [Required]
     public long LenderUserId { get; set; }
 
     [JsonIgnore]
     [ForeignKey("LenderUserId")]
-    public User? Lender { get; set; }
+    public UserModel? Lender { get; set; }
 }

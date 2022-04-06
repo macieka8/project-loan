@@ -13,7 +13,7 @@ public class UserService : IUserService
         _context = userContext;
     }
 
-    public User? GetById(long id)
+    public UserModel? GetById(long id)
     {
         return _context.Users
             .Include(u => u.BorrowedLoans)

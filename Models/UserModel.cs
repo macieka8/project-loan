@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Base.Models;
 
-public class User
+public class UserModel
 {
     public long Id { get; set; }
 
@@ -15,8 +15,8 @@ public class User
     public string? PasswordHash { get; set; }
 
     [InverseProperty("Borrower")]
-    public ICollection<Loan>? BorrowedLoans { get; set; }
+    public ICollection<LoanModel>? BorrowedLoans { get; set; }
 
     [InverseProperty("Lender")]
-    public ICollection<Loan>? LendedLoans { get; set; }
+    public ICollection<LoanModel>? LendedLoans { get; set; }
 }

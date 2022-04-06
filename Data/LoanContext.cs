@@ -10,6 +10,6 @@ public class LoanContext : DbContext
     {
     }
 
-    public DbSet<User> Users => Set<User>();
-    public DbSet<Loan> Loans => Set<Loan>();
+    public DbSet<UserModel> Users => Set<UserModel>();
+    public DbSet<LoanModel> Loans => Set<LoanModel>();
 }

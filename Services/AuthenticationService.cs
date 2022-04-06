@@ -18,17 +18,17 @@ public class AuthenticationService : IAuthenticationService
         _configuration = configuration;
     }
 
-    public (bool success, string error, User? user) Register(string username, string password)
+    public (bool success, string error, UserModel? user) Register(string username, string password)
     {
         // Check if username is available
         if (_context.Users.Any(u => u.Username == username)) return (false, "Username already used", null);
 
-        var newUser = new User
+        var newUser = new UserModel
         {
             Username = username,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(password),
-            BorrowedLoans = new List<Loan>(),
-            LendedLoans = new List<Loan>(),
+            BorrowedLoans = new List<LoanModel>(),
+            LendedLoans = new List<LoanModel>(),
         };
 
         _context.Users.Add(newUser);
@@ -49,7 +49,7 @@ public class AuthenticationService : IAuthenticationService
         return (true, jwt);
     }
 
-    string CreateJwt(User user)
+    string CreateJwt(UserModel user)
     {
         var claims = new Claim[]
         {
