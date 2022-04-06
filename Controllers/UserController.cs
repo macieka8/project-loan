@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Base.Services;
 using Base.Models;
-using Base.Models.Requests;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Base.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class UserController : ControllerBase
@@ -17,7 +18,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public ActionResult<User> Get(long id)
+    public ActionResult<User> Get([FromRoute] long id)
     {
         var foundUser = _userService.GetById(id);
 
@@ -30,41 +31,6 @@ public class UserController : ControllerBase
             return foundUser;
         }
     }
-
-    [HttpPost("register")]
-    public IActionResult Register(RegistrationRequest request)
-    {
-        var newUser = _userService.Register(request.Username, request.Password);
-
-        if (newUser is not null)
-        {
-            return CreatedAtAction(nameof(Get), new { id = newUser!.Id }, newUser);
-        }
-        else
-        {
-            return BadRequest("Invalid username or password");
-        }
-    }
-
-    [HttpPost("login")]
-    public IActionResult Login(LoginRequest request)
-    {
-        var (success, content) = _userService.Login(request.Username, request.Password);
-        if (success)
-        {
-            return Ok(content);
-        }
-        else
-        {
-            return BadRequest(content);
-        }
-    }
-
-    // [HttpPut("{id}")]
-    // public IActionResult Update(long id, User updatedUser)
-    // {
-
-    // }
 
     [HttpDelete("{id}")]
     public IActionResult Delete(long id)
