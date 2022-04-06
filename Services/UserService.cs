@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Base.Services;
 
-public class UserService
+public class UserService : IUserService
 {
     readonly LoanContext _context;
 

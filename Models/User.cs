@@ -15,8 +15,8 @@ public class User
     public string? PasswordHash { get; set; }
 
     [InverseProperty("Borrower")]
-    public List<Loan>? BorrowedLoans { get; set; }
+    public ICollection<Loan>? BorrowedLoans { get; set; }
 
     [InverseProperty("Lender")]
-    public List<Loan>? LendedLoans { get; set; }
+    public ICollection<Loan>? LendedLoans { get; set; }
 }

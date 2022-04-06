@@ -8,9 +8,9 @@ namespace Base.Controllers;
 [Route("[controller]")]
 public class AuthenticationController : ControllerBase
 {
-    readonly AuthenticationService _authenticationService;
+    readonly IAuthenticationService _authenticationService;
 
-    public AuthenticationController(AuthenticationService authenticationService)
+    public AuthenticationController(IAuthenticationService authenticationService)
     {
         _authenticationService = authenticationService;
     }
@@ -18,15 +18,15 @@ public class AuthenticationController : ControllerBase
     [HttpPost("register")]
     public IActionResult Register(RegistrationRequest request)
     {
-        var newUser = _authenticationService.Register(request.Username, request.Password);
+        var (success, content) = _authenticationService.Register(request.Username, request.Password);
 
-        if (newUser is not null)
+        if (success)
         {
             return Ok();
         }
         else
         {
-            return BadRequest("Invalid username or password");
+            return BadRequest(content);
         }
     }
 

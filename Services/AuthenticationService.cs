@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Base.Services;
 
-public class AuthenticationService
+public class AuthenticationService : IAuthenticationService
 {
     readonly LoanContext _context;
     readonly IConfiguration _configuration;
@@ -18,10 +18,10 @@ public class AuthenticationService
         _configuration = configuration;
     }
 
-    public User? Register(string username, string password)
+    public (bool success, string content) Register(string username, string password)
     {
         // Check if username is available
-        if (_context.Users.Any(u => u.Username == username)) return null;
+        if (_context.Users.Any(u => u.Username == username)) return (false, "Username already used");
 
         var newUser = new User
         {
@@ -34,7 +34,7 @@ public class AuthenticationService
         _context.Users.Add(newUser);
         _context.SaveChanges();
 
-        return newUser;
+        return (true, "");
     }
 
     public (bool success, string token) Login(string username, string password)

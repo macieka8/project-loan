@@ -11,9 +11,9 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<UserService>();
-builder.Services.AddScoped<AuthenticationService>();
-builder.Services.AddSqlite<LoanContext>("Data Source=Loans.db");
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddSqlite<LoanContext>(builder.Configuration.GetSection("ConnectionStrings:Default").Value);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o => {
     o.TokenValidationParameters = new TokenValidationParameters() {

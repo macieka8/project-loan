@@ -10,9 +10,9 @@ namespace Base.Controllers;
 [Route("[controller]")]
 public class UserController : ControllerBase
 {
-    readonly UserService _userService;
+    readonly IUserService _userService;
 
-    public UserController(UserService userService)
+    public UserController(IUserService userService)
     {
         _userService = userService;
     }
